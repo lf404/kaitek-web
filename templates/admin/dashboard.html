@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 0 auto;">
+    
+    <!-- Encabezado simple -->
+    <div style="text-align: center; margin-bottom: 50px;">
+        <h1 style="color: white; margin-bottom: 10px;">Bienvenido, Administrador</h1>
+        <p style="color: #888; font-size: 1.1rem;">Seleccione una opción para comenzar a trabajar</p>
+    </div>
+
+    <!-- Tarjetas de Acción -->
+    <div class="admin-grid">
+        <a href="{{ url_for('productos.nuevo_producto') }}" class="admin-card">
+            <div style="background: rgba(46, 204, 113, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <i class="fas fa-plus fa-2x" style="color: var(--kaitek-green);"></i>
+            </div>
+            <h3>Agregar Nuevo Producto</h3>
+            <p style="color: #888; margin-top: 10px; font-size: 0.9rem;">Subir fotos y ficha técnica</p>
+        </a>
+
+        <a href="{{ url_for('productos.listar_productos') }}" class="admin-card">
+            <div style="background: rgba(0, 153, 218, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <i class="fas fa-boxes fa-2x" style="color: var(--skf-blue);"></i>
+            </div>
+            <h3>Gestionar Inventario</h3>
+            <p style="color: #888; margin-top: 10px; font-size: 0.9rem;">Editar precios o eliminar items</p>
+        </a>
+
+        <a href="{{ url_for('catalogo.home') }}" target="_blank" class="admin-card">
+            <div style="background: rgba(230, 126, 34, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                <i class="fas fa-eye fa-2x" style="color: #e67e22;"></i>
+            </div>
+            <h3>Ver Sitio Web</h3>
+            <p style="color: #888; margin-top: 10px; font-size: 0.9rem;">Revisar cómo lo ve el cliente</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

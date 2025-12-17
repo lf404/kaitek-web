@@ -1,0 +1,86 @@
+{% extends "base_public.html" %}
+
+{% block title %}Contacto | Kaitek Solutions{% endblock %}
+
+{% block content %}
+
+<!-- Encabezado -->
+<div style="text-align: center; margin-top: 40px; padding: 0 20px;">
+    <h1 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Contáctanos</h1>
+    <p style="color: var(--text-gray); max-width: 600px; margin: 0 auto;">
+        Estamos listos para atender tus requerimientos en minería e industria. Déjanos tu mensaje y te responderemos a la brevedad.
+    </p>
+</div>
+
+<!-- Contenedor Principal -->
+<div class="contact-wrapper">
+    
+    <!-- COLUMNA IZQUIERDA: Info -->
+    <div class="contact-info-panel">
+        <h2>Kaitek</h2>
+        <p style="font-weight: bold; margin-bottom: 30px;">SOLUTIONS SpA</p>
+        
+        <div class="contact-details">
+            <p><i class="fas fa-phone-alt"></i> <span>+56 9 3257 9742</span></p>
+            <p><i class="fas fa-envelope"></i> <span>kaitek@ktschile.com</span></p>
+            <p><i class="fas fa-globe"></i> <span>www.ktschile.com</span></p>
+            <p><i class="fas fa-map-marker-alt"></i> <span>Atención a todo Chile</span></p>
+        </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: Formulario -->
+    <div class="contact-form-panel">
+        
+        <!-- Alertas de Éxito / Error -->
+        {% if success %}
+        <div style="background: #2ecc71; color: #0b1116; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-weight: bold; text-align: center;">
+            <i class="fas fa-check-circle"></i> ¡Mensaje enviado! Te contactaremos pronto.
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div style="background: #e74c3c; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+            <i class="fas fa-exclamation-triangle"></i> Hubo un error al enviar. Por favor intenta por WhatsApp.
+        </div>
+        {% endif %}
+
+        <h3>Envíanos un mensaje</h3>
+        <p style="color: #888; margin-bottom: 30px;">Rellene el formulario y le contactaremos lo antes posible.</p>
+
+        <!-- Formulario -->
+        <form action="{{ url_for('catalogo.contacto') }}" method="POST">
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Nombre y Apellido *</label>
+                    <input type="text" name="nombre" class="form-control" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Empresa</label>
+                    <input type="text" name="empresa" class="form-control" placeholder="Nombre de su empresa">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Tu Email *</label>
+                    <input type="email" name="email" class="form-control" placeholder="nombre@empresa.com" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Teléfono</label>
+                    <input type="tel" name="telefono" class="form-control" placeholder="+56 9 ...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Tu Mensaje *</label>
+                <textarea name="mensaje" class="form-control" rows="5" placeholder="Cuéntanos sobre tu requerimiento..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                Enviar Mensaje <i class="fas fa-paper-plane" style="margin-left: 10px;"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

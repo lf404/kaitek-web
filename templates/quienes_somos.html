@@ -1,0 +1,101 @@
+{% extends "base_public.html" %}
+
+{% block title %}Quiénes Somos | Kaitek Solutions{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     1. HERO SECTION (ENCABEZADO)
+     ========================================= -->
+<!-- Banner superior con imagen de fondo (clase .about-hero en CSS) -->
+<section class="about-hero">
+    <div>
+        <h1 style="color: white;">Quiénes Somos</h1>
+        <p style="color: var(--kaitek-green); font-size: 1.5rem; font-weight: bold; letter-spacing: 2px;">
+            INGENIERÍA Y RESISTENCIA AL DESGASTE
+        </p>
+    </div>
+</section>
+
+<!-- =========================================
+     2. INTRODUCCIÓN CORPORATIVA
+     ========================================= -->
+<!-- Diseño: Texto a la izquierda / Imagen a la derecha -->
+<section class="about-section">
+    <div class="about-text">
+        <h2>Kaitek Solutions SpA</h2>
+        <h3>Su Partner Estratégico en Minería</h3>
+        <p>
+            Somos una empresa especializada en <strong>soluciones industriales de alta resistencia al desgaste</strong>. 
+            Nuestra misión es optimizar la vida útil de sus equipos críticos mediante ingeniería de materiales avanzada.
+        </p>
+        <p>
+            Trabajamos donde la resistencia es crítica: minería, cementeras, energía y manufactura. 
+            Entendemos que cada parada de planta cuenta, por eso nuestra prioridad es la <strong>disponibilidad operativa</strong>.
+        </p>
+    </div>
+    
+    <div class="about-img">
+        <!-- Imagen ilustrativa de la empresa -->
+        <img src="{{ url_for('static', filename='img/about-bg.jpeg') }}" alt="Ingeniería Kaitek">
+    </div>
+</section>
+
+<!-- =========================================
+     3. PILARES ESTRATÉGICOS (VALORES)
+     ========================================= -->
+<!-- Grid de 3 columnas con tarjetas de valores -->
+<section class="values-grid">
+    
+    <!-- Tarjeta 1: Alianzas -->
+    <div class="value-card">
+        <i class="fas fa-handshake fa-3x"></i>
+        <h4>Alianzas Globales</h4>
+        <p style="color: #bdc3c7;">Representamos a líderes mundiales como <strong>LESSWEAR</strong> (Alemania) y somos partner estratégico certificado de <strong>SKF</strong>.</p>
+    </div>
+
+    <!-- Tarjeta 2: Rapidez -->
+    <div class="value-card">
+        <i class="fas fa-tachometer-alt fa-3x" style="color: var(--kaitek-green);"></i>
+        <h4>Rapidez de Respuesta</h4>
+        <p style="color: #bdc3c7;">Sabemos que el tiempo es dinero. Ofrecemos tiempos de entrega optimizados y cumplimiento riguroso de plazos.</p>
+    </div>
+
+    <!-- Tarjeta 3: Ingeniería (Icono de engranaje) -->
+    <div class="value-card">
+        <i class="fas fa-cogs fa-3x" style="color: var(--skf-blue);"></i> <!-- Se agregó color azul SKF opcional o dejar verde -->
+        <h4>Ingeniería de Materiales</h4>
+        <p style="color: #bdc3c7;">Seleccionamos la aleación exacta (Tungsteno, Alto Cromo, Bimetálicos) para su condición de operación específica.</p>
+    </div>
+</section>
+
+<!-- =========================================
+     4. NUESTRO EQUIPO (DISEÑO INVERSO)
+     ========================================= -->
+<!-- La clase 'reverse' invierte el orden: Imagen Izquierda / Texto Derecha -->
+<section class="about-section reverse">
+    <div class="about-text">
+        <h2>Nuestro Equipo</h2>
+        <h3>Experiencia y Compromiso Técnico</h3>
+        <p>
+            En el corazón de Kaitek hay un equipo multidisciplinario con larga trayectoria en el sector industrial. 
+            No solo vendemos repuestos; entregamos <strong>asesoría técnica especializada</strong>.
+        </p>
+        <p>
+            Contamos con acceso a plantas certificadas por SKF para la remanufactura de componentes y 
+            mecanizado de precisión, garantizando estándares internacionales en cada entrega.
+        </p>
+        
+        <!-- Botón de llamada a la acción (CTA) -->
+        <a href="{{ url_for('catalogo.contacto') }}" class="btn-contacto" style="text-decoration: none; display: inline-block; margin-top: 20px;">
+            Contáctanos hoy
+        </a>
+    </div>
+    
+    <div class="about-img">
+        <!-- Foto del equipo o instalaciones -->
+        <img src="{{ url_for('static', filename='img/imagen.jpeg') }}" alt="Equipo Kaitek">
+    </div>
+</section>
+
+{% endblock %}

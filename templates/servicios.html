@@ -1,0 +1,182 @@
+{% extends "base_public.html" %}
+
+{% block title %}Servicios | Kaitek Solutions{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     1. FONDO Y ENCABEZADO
+     ========================================= -->
+
+<!-- Fondo de pantalla completa (Definido en style.css como .full-page-bg) -->
+<div class="full-page-bg"></div>
+
+<!-- Título Flotante -->
+<div class="services-header">
+    <h1 style="font-size: 3.5rem; text-transform: uppercase; letter-spacing: 3px; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+        Nuestros Servicios
+    </h1>
+    <p style="color: var(--kaitek-green); font-size: 1.2rem; margin-top: 10px; font-weight: bold; text-shadow: 0 2px 5px rgba(0,0,0,0.8);">
+        SOLUCIONES INTEGRALES PARA LA INDUSTRIA
+    </p>
+</div>
+
+<!-- =========================================
+     2. CARRUSEL DE SERVICIOS
+     ========================================= -->
+<section class="carousel-wrapper">
+    
+    <!-- Botón Navegación Izquierda (<) -->
+    <button class="carousel-btn btn-prev" id="prevBtn">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <!-- Contenedor Oculto (La "ventana" que ve el usuario) -->
+    <div class="carousel-track-container">
+        
+        <!-- Pista Deslizante (Contiene todas las tarjetas) -->
+        <ul class="carousel-track" id="track">
+            
+            <!-- TARJETA 1: FUNDICIÓN -->
+            <li class="service-slide">
+                <div class="service-img-box">
+                    <img src="https://images.unsplash.com/photo-1518709414768-a8c981a45e5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fundición">
+                </div>
+                <div class="service-content">
+                    <h3>Fundición y Aleaciones</h3>
+                    <p>Componentes de alta durabilidad diseñados para ambientes severos.</p>
+                    <ul class="service-list">
+                        <li>Placas Alto Cromo y Tungsteno</li>
+                        <li>Placas Bimetálicas</li>
+                        <li>Fundición de Bronce y Aceros</li>
+                    </ul>
+                    <a href="{{ url_for('catalogo.contacto') }}" class="btn-card-center">Cotizar</a>
+                </div>
+            </li>
+
+            <!-- TARJETA 2: MAESTRANZA SKF -->
+            <li class="service-slide">
+                <div class="service-img-box">
+                    <img src="https://images.unsplash.com/photo-1565193566173-0929d995b5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Maestranza CNC">
+                </div>
+                <div class="service-content">
+                    <h3>Maestranza SKF</h3>
+                    <p>Mecanizado de precisión con certificación de calidad SKF.</p>
+                    <ul class="service-list">
+                        <li>Ejes de hasta 6 metros</li>
+                        <li>Piezas hasta 12 Toneladas</li>
+                        <li>Recuperación de Soportes</li>
+                    </ul>
+                    <a href="{{ url_for('catalogo.contacto') }}" class="btn-card-center">Cotizar</a>
+                </div>
+            </li>
+
+            <!-- TARJETA 3: DUCTOS -->
+            <li class="service-slide">
+                <div class="service-img-box">
+                    <img src="https://images.unsplash.com/photo-1535579730598-a15d04c40751?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ductos">
+                </div>
+                <div class="service-content">
+                    <h3>Fabricación de Ductos</h3>
+                    <p>Conducción segura con revestimientos para fluidos abrasivos.</p>
+                    <ul class="service-list">
+                        <li>Spools Acero Carbono/Inox</li>
+                        <li>Revestimiento Cerámico / Epoxi</li>
+                        <li>Rehabilitación Interna</li>
+                    </ul>
+                    <a href="{{ url_for('catalogo.contacto') }}" class="btn-card-center">Cotizar</a>
+                </div>
+            </li>
+
+            <!-- TARJETA 4: POLEAS -->
+            <li class="service-slide">
+                <div class="service-img-box">
+                    <img src="https://images.unsplash.com/photo-1616401776146-247b5dad443c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Poleas">
+                </div>
+                <div class="service-content">
+                    <h3>Revestimiento Poleas</h3>
+                    <p>Vulcanizado en autoclave para máxima adherencia y duración.</p>
+                    <ul class="service-list">
+                        <li>Revestimiento Full Cerámico</li>
+                        <li>Análisis de fallas</li>
+                        <li>Fabricación de planos</li>
+                    </ul>
+                    <a href="{{ url_for('catalogo.contacto') }}" class="btn-card-center">Cotizar</a>
+                </div>
+            </li>
+
+            <!-- TARJETA 5: FIJACIONES -->
+            <li class="service-slide">
+                <div class="service-img-box">
+                    <img src="https://images.unsplash.com/photo-1533235654924-f7d431057476?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fijaciones">
+                </div>
+                <div class="service-content">
+                    <h3>Pernos y Fijaciones</h3>
+                    <p>Alta resistencia mecánica y a la corrosión para entornos marinos.</p>
+                    <ul class="service-list">
+                        <li>Pernos con Wolframio</li>
+                        <li>Discos Retráctiles (TAS Schäfer)</li>
+                        <li>Bridas y Acoplamientos</li>
+                    </ul>
+                    <a href="{{ url_for('catalogo.contacto') }}" class="btn-card-center">Cotizar</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- Botón Navegación Derecha (>) -->
+    <button class="carousel-btn btn-next" id="nextBtn">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+</section>
+
+<!-- =========================================
+     3. LÓGICA JAVASCRIPT (CARRUSEL INFINITO)
+     ========================================= -->
+<script>
+    // Referencias a los elementos del DOM
+    const track = document.getElementById('track');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    // ANCHO DE MOVIMIENTO:
+    // Debe coincidir con el CSS: min-width (350px) + gap (30px) = 380px
+    const cardWidth = 380; 
+
+    // --- FUNCIÓN MOVER A LA DERECHA (NEXT) ---
+    nextBtn.addEventListener('click', () => {
+        // 1. Deslizamos el track hacia la izquierda visualmente
+        track.style.transition = 'transform 0.5s ease-in-out';
+        track.style.transform = `translateX(-${cardWidth}px)`;
+        
+        // 2. Cuando termina la animación (500ms)...
+        setTimeout(() => {
+            // Quitamos la transición para hacer el cambio invisible
+            track.style.transition = 'none';
+            // Tomamos el PRIMER elemento y lo mandamos al FINAL de la lista
+            track.appendChild(track.firstElementChild);
+            // Reseteamos la posición a 0 (como movimos el elemento, parece que no pasó nada)
+            track.style.transform = 'translateX(0)';
+        }, 500);
+    });
+
+    // --- FUNCIÓN MOVER A LA IZQUIERDA (PREV) ---
+    prevBtn.addEventListener('click', () => {
+        // 1. Preparamos el movimiento instantáneo
+        track.style.transition = 'none';
+        // Tomamos el ÚLTIMO elemento y lo ponemos al PRINCIPIO
+        track.prepend(track.lastElementChild);
+        // Desplazamos el track para que el usuario no note el cambio brusco
+        track.style.transform = `translateX(-${cardWidth}px)`;
+        
+        // 2. Una fracción de segundo después, activamos la animación
+        setTimeout(() => {
+            track.style.transition = 'transform 0.5s ease-in-out';
+            // Deslizamos hacia la posición 0 (el nuevo elemento entra suavemente)
+            track.style.transform = 'translateX(0)';
+        }, 10);
+    });
+</script>
+
+{% endblock %}

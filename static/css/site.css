@@ -1,0 +1,234 @@
+/* ==========================================================================
+   CONFIGURACIÓN PRINCIPAL DE ESTILOS (SITE.CSS)
+   Define la identidad visual base: colores, tipografía y estructura.
+   ========================================================================== */
+
+/* 
+   1. VARIABLES DE ENTORNO (CSS VARIABLES)
+   --------------------------------------------------------------------------
+   Centralizamos los colores para cambiarlos fácilmente en un solo lugar.
+*/
+:root {
+    --kaitek-green: #2ecc71; /* Verde brillante corporativo (Logo) */
+    --kaitek-dark: #0b1116;  /* Fondo principal (Casi negro) */
+    --kaitek-navy: #162433;  /* Fondo secundario (Para tarjetas y paneles) */
+    --skf-blue: #0099da;     /* Azul institucional de la alianza SKF */
+    --text-white: #ecf0f1;   /* Color para texto sobre fondos oscuros */
+    --text-gray: #bdc3c7;    /* Color para textos secundarios o descripciones */
+}
+
+/* 
+   2. CONFIGURACIÓN GLOBAL (BODY)
+   --------------------------------------------------------------------------
+*/
+body {
+    background-color: var(--kaitek-dark);
+    color: var(--text-white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    /* Truco del 'Sticky Footer': 
+       Asegura que el pie de página siempre quede abajo aunque haya poco contenido */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 
+   3. BARRA DE NAVEGACIÓN (NAVBAR)
+   --------------------------------------------------------------------------
+*/
+.navbar {
+    background-color: rgba(22, 36, 51, 0.98); /* Fondo semi-transparente */
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between; /* Separa logo a la izquierda y links a la derecha */
+    align-items: center;
+    border-bottom: 3px solid var(--kaitek-green); /* Línea decorativa inferior */
+    
+    /* Fijar menú en la parte superior al hacer scroll */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Asegura que flote sobre todo el contenido */
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-links a {
+    color: var(--text-white);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.3s; /* Suaviza el cambio de color al pasar el mouse */
+}
+
+.nav-links a:hover {
+    color: var(--kaitek-green);
+}
+
+/* Botón destacado en el menú (Contacto) */
+.btn-contacto {
+    background-color: var(--kaitek-green);
+    color: #fff !important; /* Fuerza el color blanco */
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* 
+   4. SECCIÓN HERO (PORTADA PRINCIPAL)
+   --------------------------------------------------------------------------
+*/
+.hero {
+    /* Degradado oscuro sobre la imagen de fondo (si la hubiera) */
+    background: linear-gradient(rgba(11, 17, 22, 0.85), rgba(11, 17, 22, 0.95)); 
+    height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado vertical */
+    align-items: center;     /* Centrado horizontal */
+    text-align: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #333;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.hero h2 {
+    color: var(--kaitek-green);
+    font-weight: 300;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.hero-subtitle {
+    color: var(--skf-blue);
+    font-weight: bold;
+    font-size: 1.2rem;
+    background: rgba(0, 153, 218, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--skf-blue);
+}
+
+/* 
+   5. SECCIÓN DE ALIANZAS
+   --------------------------------------------------------------------------
+*/
+.alianzas {
+    background-color: white; /* Fondo blanco para resaltar logos corporativos */
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.alianzas h3 {
+    color: var(--kaitek-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.logos-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap; /* Permite que bajen si no caben en pantalla */
+    align-items: center;
+}
+
+.partner-box {
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+/* 
+   6. SISTEMA DE GRILLA (TARJETAS DE PRODUCTOS/SERVICIOS)
+   --------------------------------------------------------------------------
+*/
+.grid {
+    display: grid;
+    /* Crea columnas automáticas: mínimo 300px, máximo lo que quepa (1fr) */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centra el contenedor en la pantalla */
+}
+
+/* Estilo de la Tarjeta */
+.card {
+    background-color: var(--kaitek-navy);
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    padding: 30px;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto Hover: Elevar tarjeta e iluminar borde */
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--kaitek-green);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Decoración: Barra lateral verde en la tarjeta */
+.card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--kaitek-green);
+}
+
+.card h3 {
+    color: var(--text-white);
+    margin-top: 15px;
+    font-size: 1.4rem;
+}
+
+.card p {
+    color: var(--text-gray);
+    line-height: 1.6;
+}
+
+/* 
+   7. PIE DE PÁGINA (FOOTER)
+   --------------------------------------------------------------------------
+*/
+footer {
+    background-color: black;
+    padding: 50px 20px;
+    text-align: center;
+    margin-top: auto; /* Empuja el footer al final del contenedor flex */
+    border-top: 1px solid #333;
+}
+
+.contact-info {
+    margin-top: 10px;
+    color: #888;
+}
+
+.highlight {
+    color: var(--kaitek-green);
+    font-weight: bold;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- =========================================
+         CONFIGURACIÓN DE CABECERA (HEAD)
+         ========================================= -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Kaitek</title>
+    
+    <!-- 1. Estilos CSS (Reutilizamos el mismo estilo oscuro de la web pública) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- 2. Font Awesome (Para los iconos de editar, borrar, cerrar sesión, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- =========================================
+         BARRA DE NAVEGACIÓN (NAVBAR) - VERSIÓN ADMIN
+         ========================================= -->
+    <!-- Se diferencia por el borde azul SKF en lugar del verde público -->
+    <nav class="navbar" style="border-bottom: 3px solid var(--skf-blue);">
+        
+        <!-- LOGO Y TÍTULO DEL PANEL -->
+        <div class="logo">
+            <!-- Al hacer clic en el logo, volvemos al Dashboard principal -->
+            <a href="{{ url_for('admin.dashboard') }}" style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
+                
+                <!-- Logo Imagen (Ajustado a 45px para que no sea invasivo) -->
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Kaitek Logo" style="height: 45px; width: auto;">
+                
+                <!-- Título explícito para que el admin sepa dónde está -->
+                <span style="color: white; font-weight: bold; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">
+                    PANEL DE ADMINISTRACIÓN KAITEK
+                </span>
+            </a>
+        </div>
+        
+        <!-- ENLACES DE NAVEGACIÓN (DERECHA) -->
+        <div class="nav-links">
+            
+            <!-- Acceso a la tabla de productos (CRUD) -->
+            <a href="{{ url_for('productos.listar_productos') }}">
+                <i class="fas fa-box-open"></i> Productos
+            </a>
+            
+            <!-- Botón para ver la web como un cliente (abre en nueva pestaña target="_blank") -->
+            <a href="{{ url_for('catalogo.home') }}" target="_blank" style="border: 1px solid var(--kaitek-green); padding: 5px 10px; border-radius: 4px;">
+                Ver Web Pública <i class="fas fa-external-link-alt"></i>
+            </a>
+            
+            <!-- Botón de Cerrar Sesión (Color Rojo para destacar) -->
+            <a href="{{ url_for('admin.admin_logout') }}" style="color: #e74c3c;">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+        </div>
+    </nav>
+
+    <!-- =========================================
+         CONTENIDO DINÁMICO (MAIN BLOCK)
+         ========================================= -->
+    <!-- Aquí es donde se "inyectan" las páginas hijas:
+         - dashboard.html
+         - productos.html
+         - producto_form.html
+    -->
+    <main style="padding: 40px;">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

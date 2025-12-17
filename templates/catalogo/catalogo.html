@@ -1,0 +1,72 @@
+{% extends "base_public.html" %}
+
+{% block title %}Catálogo | Kaitek Solutions{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     ENCABEZADO Y FILTROS
+     ========================================= -->
+<div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+    <h1 style="color: white; text-transform: uppercase; letter-spacing: 2px;">Catálogo de Productos</h1>
+    <p style="color: var(--kaitek-green);">Soluciones especializadas para su industria</p>
+
+    <!-- Barra de Filtros -->
+    <div class="filter-bar" style="margin-top: 30px; background: transparent; gap: 10px;">
+        <a href="{{ url_for('catalogo.catalogo') }}" class="filter-btn {% if not cat_actual %}active{% endif %}">
+            Todos
+        </a>
+        {% for cat in categorias %}
+            <a href="{{ url_for('catalogo.catalogo', categoria=cat) }}" 
+               class="filter-btn {% if cat_actual == cat %}active{% endif %}">
+               {{ cat }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- =========================================
+     GRILLA DE PRODUCTOS
+     ========================================= -->
+<section class="grid">
+    {% for p in productos %}
+    <div class="card">
+        <!-- Imagen del Producto -->
+        {% if p.imagenes %}
+            <div style="height: 200px; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #333;">
+                <img src="{{ url_for('static', filename='uploads/' + p.imagenes[0]) }}" alt="{{ p.nombre }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        {% else %}
+            <div style="height: 200px; background: #222; display: flex; align-items: center; justify-content: center; color: #555;">
+                <i class="fas fa-camera fa-2x"></i>
+            </div>
+        {% endif %}
+        
+        <div class="card-content" style="padding: 20px;">
+            
+            <!-- Etiqueta de Categoría (CSS: .cat-badge) -->
+            <span class="cat-badge">{{ p.categoria }}</span>
+            
+            <!-- Título -->
+            <h3>{{ p.nombre }}</h3>
+            
+            <!-- Descripción Corta -->
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 40px;">
+                {{ p.descripcion }}
+            </p>
+            
+            <!-- Botón Ver Detalles (CSS: .btn-detalle) -->
+            <a href="{{ url_for('catalogo.producto', id=p._id) }}" class="btn-detalle">
+                Ver Detalles <i class="fas fa-arrow-right" style="margin-left: 5px; font-size: 0.8em;"></i>
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+        <h3 style="color: #666;">No se encontraron productos en esta categoría.</h3>
+        <a href="{{ url_for('catalogo.catalogo') }}" class="btn-contacto" style="text-decoration: none; margin-top: 20px; display: inline-block;">Ver todos los productos</a>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}  

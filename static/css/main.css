@@ -1,0 +1,105 @@
+/* =========================================
+   1. VARIABLES Y CONFIGURACIÓN DE COLORES
+   Define la paleta de colores para todo el sitio.
+   ========================================= */
+:root {
+  --bg-dark: #0b0f1a;   /* Fondo más oscuro (casi negro) */
+  --bg-card: #151a2c;   /* Fondo para tarjetas/elementos */
+  --text: #e5e7eb;      /* Color de texto principal (gris claro) */
+  
+  /* Gradiente principal: Usado en botones y destacados */
+  --primary: linear-gradient(90deg, #7c7cff, #3dd9c6);
+}
+
+/* =========================================
+   2. ESTILOS GLOBALES (BODY)
+   ========================================= */
+body {
+  margin: 0; /* Elimina los márgenes por defecto del navegador */
+  font-family: system-ui, sans-serif; /* Usa la fuente nativa del sistema operativo */
+  
+  /* Fondo general con un efecto de luz radial desde arriba */
+  background: radial-gradient(circle at top, #1b2140, #05060a);
+  
+  color: var(--text); /* Aplica el color de texto definido arriba */
+}
+
+/* =========================================
+   3. BARRA DE NAVEGACIÓN (NAVBAR)
+   ========================================= */
+.navbar {
+  /* Fondo semitransparente */
+  background: rgba(10, 10, 20, 0.8);
+  
+  /* Efecto "Glassmorphism": Desenfoca lo que pasa por detrás del menú */
+  backdrop-filter: blur(10px);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between; /* Separa logo a la izq y links a la der */
+  align-items: center;            /* Centra verticalmente */
+  padding: 1rem;
+}
+
+/* Estilos del Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;          /* Espacio entre icono y texto */
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.logo img {
+  height: 28px;        /* Tamaño fijo para el icono */
+}
+
+/* Enlaces del Menú */
+.nav-links a {
+  margin-left: 1rem;
+  color: #cbd5f5;      /* Color ligeramente azulado */
+  text-decoration: none;
+}
+
+/* Botón Principal (CTA) en el menú */
+.btn-primary {
+  background: var(--primary); /* Usa el gradiente definido en :root */
+  padding: .6rem 1rem;
+  border-radius: 999px;       /* Bordes completamente redondos (Pill shape) */
+  color: black;
+  font-weight: bold;
+}
+
+/* =========================================
+   4. SECCIÓN HERO (PORTADA)
+   ========================================= */
+.hero {
+  padding: 3rem 1rem; /* Espaciado interno */
+}
+
+.hero-grid {
+  display: grid;
+  gap: 2rem; /* Espacio entre elementos de la grilla */
+  /* Nota: Faltaría definir 'grid-template-columns' aquí o en el HTML */
+}
+
+.hero-card {
+  background: var(--bg-card); /* Color de fondo de tarjeta */
+  padding: 1.5rem;
+  border-radius: 16px;        /* Bordes redondeados modernos */
+}
+
+/* =========================================
+   5. PIE DE PÁGINA (FOOTER)
+   ========================================= */
+.footer {
+  padding: 2rem 1rem;
+  background: rgba(0, 0, 0, .3); /* Fondo ligeramente más oscuro que el body */
+}
+
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+}

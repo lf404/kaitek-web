@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =========================================
+     ESTILOS CSS LOCALES
+     Para las miniaturas y botones de borrar
+     ========================================= -->
+<style>
+    /* Contenedor de la miniatura (tanto guardada como previa) */
+    .preview-item {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border: 1px solid #2ecc71; /* Borde verde */
+        border-radius: 4px;
+        overflow: hidden;
+        transition: transform 0.2s;
+        background-color: #000;
+    }
+    
+    .preview-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+    }
+
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Botón rojo de eliminar (X) */
+    .btn-remove-img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(231, 76, 60, 0.9); /* Rojo */
+        color: white;
+        border: none;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        border-bottom-left-radius: 4px;
+        text-decoration: none; /* Importante para enlaces <a> */
+        font-size: 1.2rem;
+        line-height: 1;
+        z-index: 10;
+    }
+
+    .btn-remove-img:hover {
+        background: red;
+    }
+</style>
+
+<!-- =========================================
+     CONTENEDOR PRINCIPAL
+     ========================================= -->
+<div style="max-width: 900px; margin: 30px auto; padding: 30px; background: #162433; color: white; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+    
+    <!-- Encabezado del Formulario -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #2ecc71; padding-bottom: 15px; margin-bottom: 25px;">
+        <h2 style="margin: 0;">{{ "Editar" if producto else "Nuevo" }} Producto</h2>
+        <a href="{{ url_for('productos.listar_productos') }}" style="color: #ccc; text-decoration: none;">
+            <i class="fas fa-times"></i> Cancelar
+        </a>
+    </div>
+    
+    <!-- Inicio del Formulario -->
+    <form method="POST" enctype="multipart/form-data" id="productForm">
+        
+        <!-- Fila 1: Nombre y Categoría -->
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 2; margin-bottom: 15px;">
+                <label style="display:block; margin-bottom:5px;">Nombre del Producto</label>
+                <input type="text" name="nombre" value="{{ producto.nombre if producto else '' }}" required 
+                       style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px;">
+            </div>
+
+            <div style="flex: 1; margin-bottom: 15px;">
+                <label style="display:block; margin-bottom:5px; color: #2ecc71;">Categoría</label>
+                <select name="categoria" required style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px;">
+                    <option value="" disabled selected>Seleccionar...</option>
+                    <option value="Fundición" {% if producto and producto.categoria == 'Fundición' %}selected{% endif %}>Fundición</option>
+                    <option value="Pernos" {% if producto and producto.categoria == 'Pernos' %}selected{% endif %}>Pernos</option>
+                    <option value="Maestranza SKF" {% if producto and producto.categoria == 'Maestranza SKF' %}selected{% endif %}>Maestranza SKF</option>
+                    <option value="Ductos" {% if producto and producto.categoria == 'Ductos' %}selected{% endif %}>Ductos</option>
+                    <option value="Fijaciones" {% if producto and producto.categoria == 'Fijaciones' %}selected{% endif %}>Fijaciones</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Fila 2: Precio -->
+        <div style="margin-bottom: 15px;">
+            <label style="display:block; margin-bottom:5px;">Precio / Referencia</label>
+            <input type="text" name="precio" value="{{ producto.precio if producto else '' }}" placeholder="Ej: $12.000 o 'A cotizar'"
+                   style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px;">
+        </div>
+
+        <!-- Fila 3: Descripción -->
+        <div style="margin-bottom: 15px;">
+            <label style="display:block; margin-bottom:5px;">Descripción Técnica</label>
+            <textarea name="descripcion" rows="6" required 
+                      style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px; font-family: sans-serif;">{{ producto.descripcion if producto else '' }}</textarea>
+        </div>
+
+        <!-- =========================================
+             ZONA DE GESTIÓN DE IMÁGENES
+             ========================================= -->
+        <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+            <label style="display:block; margin-bottom:10px; font-size: 1.1rem; color: #2ecc71;">Galería de Imágenes</label>
+            
+            <!-- A) IMÁGENES YA GUARDADAS (Base de Datos) -->
+            <!-- Solo se muestran si estamos editando y existen imágenes -->
+            {% if producto and producto.imagenes %}
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">Imágenes actuales (Guardadas):</p>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    {% for img in producto.imagenes %}
+                    <div class="preview-item" style="border-color: #555;"> <!-- Borde gris para diferenciar -->
+                        
+                        <!-- La imagen -->
+                        <img src="{{ url_for('static', filename='uploads/' + img) }}">
+                        
+                        <!-- Botón Eliminar: Llama a la ruta Flask que creamos anteriormente -->
+                        <a href="{{ url_for('productos.eliminar_imagen', id=producto._id, filename=img) }}" 
+                           class="btn-remove-img"
+                           onclick="return confirm('¿Estás seguro de borrar esta foto permanentemente?');"
+                           title="Eliminar imagen guardada">
+                            &times;
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- B) ZONA DE CARGA (Nuevas Imágenes) -->
+            <div style="border: 2px dashed #444; border-radius: 8px; padding: 30px; text-align: center; background: rgba(0,0,0,0.2);">
+                <i class="fas fa-cloud-upload-alt fa-3x" style="color: #555; margin-bottom: 10px;"></i>
+                <p style="margin: 0; color: #aaa;">Añadir imágenes nuevas</p>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">(Se sumarán a las existentes)</p>
+                
+                <!-- Input type="file" oculto -->
+                <input type="file" name="imagenes" id="file-input" multiple style="display: none;">
+                
+                <!-- Botón visual que activa el input oculto -->
+                <button type="button" onclick="document.getElementById('file-input').click()" 
+                        style="margin-top: 15px; background: #2ecc71; color: #0b1116; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    <i class="fas fa-plus"></i> Seleccionar Fotos
+                </button>
+            </div>
+
+            <!-- C) VISTA PREVIA DE NUEVAS IMÁGENES -->
+            <!-- Aquí aparecen las fotos seleccionadas con JavaScript -->
+            <div style="margin-top: 20px;">
+                <p id="counter-text" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">Nuevas imágenes para subir:</p>
+                <div id="preview-container" style="display: flex; gap: 15px; flex-wrap: wrap;"></div>
+            </div>
+        </div>
+
+        <!-- Botón Guardar -->
+        <div style="margin-top: 30px;">
+            <button type="submit" style="background: linear-gradient(45deg, #2ecc71, #27ae60); color: white; padding: 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1rem; width: 100%; font-weight: bold;">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- =========================================
+     JAVASCRIPT PARA IMÁGENES NUEVAS
+     ========================================= -->
+<script>
+    // 1. Variables Globales
+    let storedFiles = []; // Almacena los archivos en memoria
+    const input = document.getElementById('file-input');
+    const container = document.getElementById('preview-container');
+    const counter = document.getElementById('counter-text');
+
+    // 2. Escuchar cuando el usuario selecciona archivos
+    input.addEventListener('change', function(e) {
+        const files = e.target.files;
+        
+        // Agregar los nuevos archivos al arreglo (sin borrar los anteriores)
+        for (let i = 0; i < files.length; i++) {
+            storedFiles.push(files[i]);
+        }
+
+        // Actualizar la vista y el input real
+        updatePreview();
+        updateInputFiles();
+    });
+
+    // 3. Función para dibujar las miniaturas
+    function updatePreview() {
+        container.innerHTML = ""; // Limpiar contenedor visual
+        
+        if (storedFiles.length === 0) {
+            counter.innerText = "No hay imágenes nuevas seleccionadas.";
+            return;
+        }
+        counter.innerText = `Nuevas imágenes listas para subir: ${storedFiles.length}`;
+
+        storedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Crear DIV contenedor
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+
+                // Crear IMAGEN
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                
+                // Crear BOTÓN ELIMINAR (Para la previsualización)
+                const btn = document.createElement('button');
+                btn.className = 'btn-remove-img';
+                btn.innerHTML = '&times;';
+                btn.type = 'button'; // Evita que envíe el formulario
+                btn.title = "Quitar de la selección";
+                
+                // Evento para borrar esta foto específica del array
+                btn.onclick = function() {
+                    removeFile(index);
+                };
+
+                div.appendChild(img);
+                div.appendChild(btn);
+                container.appendChild(div);
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // 4. Función para eliminar un archivo del array en memoria
+    function removeFile(index) {
+        storedFiles.splice(index, 1); // Quitar del array
+        updatePreview();              // Redibujar
+        updateInputFiles();           // Actualizar input
+    }
+
+    // 5. Truco: Actualizar el input type="file" original
+    // Esto es necesario para que el formulario envíe los archivos al servidor
+    function updateInputFiles() {
+        const dataTransfer = new DataTransfer();
+        storedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        input.files = dataTransfer.files;
+    }
+</script>
+{% endblock %}

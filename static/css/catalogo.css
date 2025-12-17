@@ -1,0 +1,89 @@
+/* =========================================
+   ESTILOS ESPECÍFICOS DEL CATÁLOGO
+   Define la cuadrícula de productos y la vista de detalle.
+   ========================================= */
+
+/* --- CONFIGURACIÓN BASE --- */
+body {
+    font-family: Arial, sans-serif; /* Tipografía legible para todo el documento */
+    margin: 0;                      /* Elimina los márgenes por defecto del navegador */
+    background: #f5f5f5;            /* Fondo gris muy suave para que resalten las tarjetas blancas */
+}
+
+/* --- ENCABEZADO (HEADER) --- */
+.header {
+    background: #0b1d2a; /* Azul oscuro corporativo */
+    color: white;        /* Texto blanco para contraste */
+    padding: 2rem;       /* Espaciado interno amplio */
+    text-align: center;  /* Centra el título y contenido */
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.container {
+    padding: 2rem; /* Espacio alrededor del contenido principal para que no toque los bordes */
+}
+
+/* --- SISTEMA DE GRILLA (GRID) --- */
+/* Esta es la parte más importante para que el catálogo sea responsive */
+.grid {
+    display: grid;
+    /* Crea columnas automáticas.
+       - minmax(250px, 1fr): Cada columna tendrá mínimo 250px de ancho.
+       - Si hay espacio, crecerá (1fr).
+       - Si no cabe, bajará a la siguiente fila automáticamente. */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem; /* Espacio entre las tarjetas (huecos) */
+}
+
+/* --- TARJETA DE PRODUCTO (CARD) --- */
+.card {
+    background: white;      /* Fondo blanco */
+    padding: 1rem;          /* Espacio interno */
+    border-radius: 6px;     /* Bordes ligeramente redondeados */
+    text-align: center;     /* Centra la imagen y el texto del producto */
+    /* Opcional: Podrías agregar aquí un box-shadow para dar profundidad */
+}
+
+/* Control de imágenes dentro de la tarjeta */
+.card img {
+    width: 100%;            /* Ocupa todo el ancho de la tarjeta */
+    height: 180px;          /* Altura fija para que todas las tarjetas sean iguales */
+    object-fit: cover;      /* IMPORTANTE: Recorta la imagen para llenar el espacio sin deformarla */
+}
+
+/* Estilo del precio */
+.precio {
+    font-weight: bold;      /* Texto en negrita */
+    margin: 1rem 0;         /* Separación vertical */
+}
+
+/* --- BOTONES (BTN) --- */
+.btn {
+    display: inline-block;  /* Comportamiento de bloque para aceptar padding */
+    padding: 0.6rem 1rem;   /* Tamaño del botón */
+    background: #0b1d2a;    /* Mismo color del header */
+    color: white;
+    text-decoration: none;  /* Quita el subrayado del enlace */
+    border-radius: 4px;     /* Bordes redondeados */
+}
+
+/* --- VISTA DE DETALLE DEL PRODUCTO --- */
+.detalle {
+    display: flex;          /* Usa Flexbox para poner imagen y texto lado a lado */
+    gap: 2rem;              /* Separación entre imagen y texto */
+    background: white;
+    padding: 2rem;
+}
+
+.detalle img {
+    width: 300px;           /* Tamaño fijo para la imagen de detalle */
+    object-fit: cover;      /* Evita deformación */
+}
+
+/* --- PIE DE PÁGINA (FOOTER) --- */
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background: #0b1d2a;    /* Coincide con el header */
+    color: white;
+}
