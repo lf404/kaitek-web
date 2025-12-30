@@ -18,25 +18,28 @@ def home():
     return render_template("catalogo/index.html")
 
 # ==========================================================================
-# 2. CATÁLOGO DE PRODUCTOS (Con Filtros)
+# 2. CATÁLOGO DE PRODUCTOS (Con Filtros y Correcciones)
 # ==========================================================================
 @catalogo_bp.route("/catalogo")
 def catalogo():
     db = get_db()
     
-    # 1. Filtro por categoría
+    # 1. Obtener el filtro de la URL (Ej: ?categoria=Pernos)
     categoria_filter = request.args.get('categoria')
     query = {}
-    if categoria_filter:
-        query['categoria'] = categoria_filter
-        
-    # 2. Búsqueda de Productos
-    productos = list(db.productos.find(query))
     
-    # 3. CAMBIO: Lista de categorías desde la colección 'categorias'
-    # Obtenemos solo los nombres (lista de strings) para el template
-    # Antes usábamos distinct en productos, pero ahora queremos mostrar
-    # las categorías oficiales que el admin creó.
+    # 2. Si hay filtro, lo limpiamos y lo agregamos a la consulta
+    if categoria_filter:
+        # .strip() elimina espacios en blanco al inicio o final que causan errores
+        categoria_limpia = categoria_filter.strip()
+        query['categoria'] = categoria_limpia
+        
+    # 3. Búsqueda de Productos
+    # .sort("_id", -1) hace que los productos NUEVOS aparezcan PRIMERO
+    productos = list(db.productos.find(query).sort("_id", -1))
+    
+    # 4. Obtener lista de categorías para el menú de botones
+    # Usamos las categorías creadas en el Admin para asegurar coincidencia
     cursor_categorias = db.categorias.find().sort("nombre", 1)
     todas_categorias = [c["nombre"] for c in cursor_categorias]
     
@@ -53,9 +56,12 @@ def catalogo():
 @catalogo_bp.route("/producto/<id>")
 def producto(id):
     try:
+        # Buscamos el producto por su ID único
         producto = get_db().productos.find_one({"_id": ObjectId(id)})
     except:
+        # Si el ID no es válido o hay error, devolvemos None
         producto = None
+        
     return render_template("catalogo/producto.html", producto=producto)
 
 # ==========================================================================
