@@ -36,21 +36,19 @@
                     <th width="150" style="text-align: center;">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+<tbody>
                 {% for c in categorias %}
                 <tr>
-                    <td>
+                    <td data-label="Nombre">
                         <strong style="color: white; font-size: 1.1rem;">{{ c.nombre }}</strong>
                     </td>
-                    <td style="text-align: center;">
-                        <!-- BOTÓN EDITAR (NUEVO) -->
+                    <td data-label="Acciones" style="text-align: right;"> <!-- right para móvil -->
                         <a href="{{ url_for('categorias.editar_categoria', id=c._id) }}" 
                            class="action-btn btn-edit" 
                            title="Editar nombre">
                             <i class="fas fa-edit"></i>
                         </a>
 
-                        <!-- BOTÓN ELIMINAR -->
                         <a href="{{ url_for('categorias.eliminar_categoria', id=c._id) }}" 
                            class="action-btn btn-delete"
                            onclick="return confirm('¿Eliminar la categoría {{ c.nombre }}?');"

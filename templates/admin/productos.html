@@ -20,27 +20,27 @@
                     <th width="150">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+<tbody>
                 {% for p in productos %}
                 <tr>
-                    <td>
+                    <td data-label="Imagen">
                         {% if p.imagenes %}
-                        <img src="{{ url_for('static', filename='uploads/' + p.imagenes[0]) }}" 
+                        <img src="{{ p.imagenes[0] }}" 
                              style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
                         {% else %}
                         <span style="font-size: 0.8rem; color: #555;">Sin foto</span>
                         {% endif %}
                     </td>
-                    <td>
+                    <td data-label="Nombre">
                         <strong style="color: white;">{{ p.nombre }}</strong>
                     </td>
-                    <td>
+                    <td data-label="Categoría">
                         <span style="background: #222; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
                             {{ p.categoria }}
                         </span>
                     </td>
-                    <td>{{ p.precio }}</td>
-                    <td>
+                    <td data-label="Precio Ref.">{{ p.precio }}</td>
+                    <td data-label="Acciones">
                         <a href="{{ url_for('productos.editar_producto', id=p._id) }}" class="action-btn btn-edit">
                             <i class="fas fa-edit"></i>
                         </a>

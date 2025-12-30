@@ -262,58 +262,148 @@ body {
 footer { background-color: black; padding: 50px 20px; text-align: center; margin-top: auto; border-top: 1px solid #333; position: relative; z-index: 10; }
 
 /* ==========================================================================
-   6. RESPONSIVE MOBILE (LA MAGIA EMPIEZA AQUÍ)
+   6. RESPONSIVE MOBILE (PROFESIONAL & AESTHETIC)
    ========================================================================== */
 @media (max-width: 768px) {
-    /* Navbar: Se convierte en columna y oculta links */
-    .navbar { padding: 1rem; flex-wrap: wrap; }
-    .menu-toggle { display: block; position: absolute; right: 20px; top: 20px; }
     
+    /* --- AJUSTES GENERALES --- */
+    body { font-size: 16px; } /* Texto base legible */
+    
+    .navbar { 
+        padding: 15px; 
+        flex-wrap: wrap; 
+        justify-content: space-between; 
+        position: relative;
+    }
+    
+    /* Logo más pequeño para dar espacio */
+    .logo img { height: 35px; } 
+    .logo span { font-size: 1.2rem; }
+
+    /* Menú Hamburguesa */
+    .menu-toggle { 
+        display: block; 
+        font-size: 1.5rem; 
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    /* Menú Desplegable Estilizado */
     .nav-links {
-        display: none; /* Oculto por defecto en móvil */
+        display: none;
         width: 100%;
         flex-direction: column;
-        margin-top: 20px;
-        background: #0b1116;
-        padding: 10px;
+        margin-top: 15px;
+        background: var(--kaitek-navy);
         border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        overflow: hidden;
         border: 1px solid #333;
     }
-    
-    /* Clase que activaremos con JS para mostrar el menú */
     .nav-links.active { display: flex; }
+    .nav-links a { 
+        margin: 0; 
+        padding: 15px; 
+        border-bottom: 1px solid rgba(255,255,255,0.05); 
+        text-align: left;
+    }
+    .nav-links a:last-child { border-bottom: none; }
 
-    .nav-links a { margin: 10px 0; display: block; text-align: center; font-size: 1.1rem; padding: 10px; }
-
-    /* Hero */
-    .hero h1 { font-size: 2.2rem; }
-    .hero h2 { font-size: 1.5rem; }
-    .hero-subtitle { font-size: 1rem; padding: 8px 15px; }
-
-    /* Grillas a 1 sola columna */
-    .grid { padding: 30px 20px; grid-template-columns: 1fr; }
-    .about-section { flex-direction: column; text-align: center; padding: 0 15px; gap: 30px; }
-    .about-section.reverse { flex-direction: column; }
-    .about-hero h1 { font-size: 2.5rem; }
-
-    /* Carrusel Responsive */
-    .carousel-wrapper { padding: 0; margin-top: 20px; }
-    .service-slide { flex: 0 0 100%; min-width: 100%; } /* Tarjeta ocupa todo el ancho */
-    .carousel-btn { width: 40px; height: 40px; font-size: 1.2rem; background: rgba(46,204,113,0.8); }
-    .btn-prev { left: 10px; }
-    .btn-next { right: 10px; }
+    /* --- HERO & TEXTOS --- */
+    .hero { height: auto; padding: 100px 20px 60px 20px; }
+    .hero h1 { font-size: 2.5rem; line-height: 1.2; }
+    .hero h2 { font-size: 1.5rem; margin-top: 10px; }
     
-    /* Detalle Producto */
-    .product-detail-container { 
-        /* Esta clase la usaremos en el HTML de detalle producto */
-        grid-template-columns: 1fr !important; 
-        padding: 20px !important; 
+    /* --- ADMIN & FORMULARIOS (SOLUCIÓN INPUTS) --- */
+    /* Forzamos que los formularios sean columna única */
+    form div[style*="display: flex"] { 
+        flex-direction: column !important; 
+        gap: 15px !important; 
     }
     
-    /* Contacto */
-    .contact-wrapper { flex-direction: column; margin: 20px 10px; }
-    .contact-info-panel, .contact-form-panel { padding: 30px 20px; }
+    .card { padding: 20px; }
     
-    /* Admin */
-    .preview-item { width: 80px; height: 80px; }
+    /* Inputs más grandes para el dedo */
+    input, select, textarea, .form-control { 
+        font-size: 16px !important; /* Evita zoom automático en iPhone */
+        padding: 12px !important;
+        width: 100% !important;
+    }
+
+    /* --- SOLUCIÓN MAESTRA PARA TABLAS (TABLE TO CARDS) --- */
+    /* Ocultamos la cabecera de la tabla */
+    .admin-table thead { display: none; }
+    
+    .admin-table, .admin-table tbody, .admin-table tr, .admin-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .admin-table tr {
+        margin-bottom: 20px;
+        background: #1e2e40; /* Fondo ligeramente diferente para distinguir filas */
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 15px;
+        position: relative;
+    }
+
+    .admin-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .admin-table td:last-child { border-bottom: none; }
+
+    /* Usamos el atributo 'data-label' para poner el título a la izquierda */
+    .admin-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--kaitek-green);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        text-align: left;
+        margin-right: 15px;
+    }
+
+    /* Ajuste para imágenes en tablas */
+    .admin-table img {
+        width: 50px !important; height: 50px !important;
+    }
+
+    /* --- CARRUSEL (SOLUCIÓN FLECHAS) --- */
+    .carousel-wrapper { padding: 0; margin-top: 20px; }
+    .service-slide { flex: 0 0 100%; min-width: 100%; }
+    
+    /* Flechas flotantes más pequeñas y transparentes para no tapar texto */
+    .carousel-btn { 
+        width: 40px; height: 40px; 
+        background: rgba(46, 204, 113, 0.2); /* Verde transparente */
+        backdrop-filter: blur(5px);
+        border: 1px solid var(--kaitek-green);
+        font-size: 1rem;
+    }
+    .btn-prev { left: 10px; }
+    .btn-next { right: 10px; }
+
+    /* Dar espacio al texto para que no choque con las flechas */
+    .service-content { padding: 30px 50px; } 
+
+    /* --- DETALLE PRODUCTO --- */
+    .product-detail-container { 
+        grid-template-columns: 1fr !important; 
+        gap: 30px !important;
+        padding: 20px !important;
+    }
+    
+    /* Imagen principal que no sea gigante */
+    #main-image { height: 300px !important; background: #0b1116; }
+    
+    /* Botones de acción grandes */
+    .action-btn { padding: 10px 15px; font-size: 1.1rem; }
 }
