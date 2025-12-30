@@ -19,6 +19,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-size: 16px; /* Base para móviles */
 }
 
 /* Fondo Especial para Home */
@@ -57,7 +58,7 @@ body {
    ========================================================================== */
 .navbar {
     background-color: rgba(22, 36, 51, 0.98);
-    padding: 1rem 2rem;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,10 +71,14 @@ body {
 .logo a {
     color: white;
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+.logo img { height: 35px; width: auto; }
 
 .nav-links a {
     color: var(--text-white);
@@ -95,9 +100,9 @@ body {
     text-decoration: none;
 }
 
-/* ICONO HAMBURGUESA (Oculto en PC, Visible en Móvil) */
+/* ICONO HAMBURGUESA (Oculto en PC) */
 .menu-toggle {
-    display: none; /* Por defecto no se ve */
+    display: none;
     color: white;
     font-size: 1.8rem;
     cursor: pointer;
@@ -117,18 +122,8 @@ body {
     padding: 0 20px;
     border-bottom: 1px solid #333;
 }
-.hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-.hero h2 {
-    color: var(--kaitek-green);
-    font-weight: 300;
-    margin-bottom: 20px;
-    font-size: 2rem;
-}
+.hero h1 { font-size: 3.5rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 3px; }
+.hero h2 { color: var(--kaitek-green); font-weight: 300; margin-bottom: 20px; font-size: 2rem; }
 
 .alianzas { background-color: white; padding: 30px 20px; text-align: center; }
 .alianzas h3 { color: var(--kaitek-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
@@ -255,112 +250,86 @@ body {
 /* Admin Grid */
 .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
 .admin-card { background: var(--kaitek-navy); padding: 30px; border-radius: 8px; text-align: center; border: 1px solid #333; text-decoration: none; display: block; }
-.table-container { overflow-x: auto; background: var(--kaitek-navy); border-radius: 8px; padding: 20px; }
-.admin-table { width: 100%; border-collapse: collapse; color: var(--text-gray); min-width: 600px; /* Fuerza scroll en móvil */ }
+.table-container { 
+    /* Quitamos overflow para móvil porque usaremos Cards */
+    background: transparent; 
+    border-radius: 8px; 
+    padding: 0; 
+}
+.admin-table { width: 100%; border-collapse: collapse; color: var(--text-gray); }
 .admin-table th, .admin-table td { padding: 15px; border-bottom: 1px solid #333; }
 
 footer { background-color: black; padding: 50px 20px; text-align: center; margin-top: auto; border-top: 1px solid #333; position: relative; z-index: 10; }
 
 /* ==========================================================================
-   6. RESPONSIVE MOBILE (PROFESIONAL & AESTHETIC)
+   6. RESPONSIVE MOBILE (CORREGIDO PARA CERO SCROLL HORIZONTAL)
    ========================================================================== */
 @media (max-width: 768px) {
     
-    /* --- AJUSTES GENERALES --- */
-    body { font-size: 16px; } /* Texto base legible */
+    /* --- MENÚ MÓVIL --- */
+    .menu-toggle { display: block; position: absolute; right: 20px; top: 18px; }
     
-    .navbar { 
-        padding: 15px; 
-        flex-wrap: wrap; 
-        justify-content: space-between; 
-        position: relative;
-    }
-    
-    /* Logo más pequeño para dar espacio */
-    .logo img { height: 35px; } 
-    .logo span { font-size: 1.2rem; }
-
-    /* Menú Hamburguesa */
-    .menu-toggle { 
-        display: block; 
-        font-size: 1.5rem; 
-        cursor: pointer;
-        padding: 5px;
-    }
-
-    /* Menú Desplegable Estilizado */
     .nav-links {
-        display: none;
+        display: none; /* Se activa con JS */
         width: 100%;
         flex-direction: column;
-        margin-top: 15px;
+        margin-top: 60px; /* Separación del top */
         background: var(--kaitek-navy);
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        overflow: hidden;
+        padding: 0;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         border: 1px solid #333;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 999;
     }
     .nav-links.active { display: flex; }
-    .nav-links a { 
-        margin: 0; 
-        padding: 15px; 
-        border-bottom: 1px solid rgba(255,255,255,0.05); 
-        text-align: left;
-    }
-    .nav-links a:last-child { border-bottom: none; }
+    .nav-links a { margin: 0; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); width: 100%; box-sizing: border-box; text-align: left; }
 
-    /* --- HERO & TEXTOS --- */
-    .hero { height: auto; padding: 100px 20px 60px 20px; }
-    .hero h1 { font-size: 2.5rem; line-height: 1.2; }
-    .hero h2 { font-size: 1.5rem; margin-top: 10px; }
+    /* --- ARREGLO DE SCROLL Y MÁRGENES --- */
+    .hero { padding: 100px 20px 60px 20px; height: auto; }
+    .hero h1 { font-size: 2.2rem; }
     
-    /* --- ADMIN & FORMULARIOS (SOLUCIÓN INPUTS) --- */
-    /* Forzamos que los formularios sean columna única */
-    form div[style*="display: flex"] { 
-        flex-direction: column !important; 
-        gap: 15px !important; 
-    }
+    /* Forzar que nada sea más ancho que la pantalla */
+    body, html { overflow-x: hidden; width: 100%; }
     
-    .card { padding: 20px; }
+    .grid { padding: 30px 15px; grid-template-columns: 1fr; gap: 20px; }
     
-    /* Inputs más grandes para el dedo */
-    input, select, textarea, .form-control { 
-        font-size: 16px !important; /* Evita zoom automático en iPhone */
-        padding: 12px !important;
-        width: 100% !important;
-    }
-
-    /* --- SOLUCIÓN MAESTRA PARA TABLAS (TABLE TO CARDS) --- */
-    /* Ocultamos la cabecera de la tabla */
-    .admin-table thead { display: none; }
+    /* --- ADMIN: TRANSFORMACIÓN DE TABLA A TARJETAS --- */
+    .table-container { padding: 0; }
+    
+    /* Ocultamos encabezados de tabla para siempre en móvil */
+    .admin-table thead { display: none !important; }
     
     .admin-table, .admin-table tbody, .admin-table tr, .admin-table td {
         display: block;
         width: 100%;
-        box-sizing: border-box;
+        box-sizing: border-box; /* Fundamental para evitar scroll */
     }
 
     .admin-table tr {
+        background: var(--kaitek-navy);
+        border: 1px solid #444;
         margin-bottom: 20px;
-        background: #1e2e40; /* Fondo ligeramente diferente para distinguir filas */
-        border: 1px solid #333;
-        border-radius: 8px;
+        border-radius: 12px;
         padding: 15px;
-        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
     .admin-table td {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; /* Texto a los extremos */
         align-items: center;
         text-align: right;
-        padding: 10px 0;
+        padding: 12px 0;
         border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.95rem;
     }
     
     .admin-table td:last-child { border-bottom: none; }
 
-    /* Usamos el atributo 'data-label' para poner el título a la izquierda */
+    /* La magia: Usamos el atributo data-label del HTML */
     .admin-table td::before {
         content: attr(data-label);
         font-weight: bold;
@@ -368,42 +337,45 @@ footer { background-color: black; padding: 50px 20px; text-align: center; margin
         text-transform: uppercase;
         font-size: 0.8rem;
         text-align: left;
-        margin-right: 15px;
     }
 
-    /* Ajuste para imágenes en tablas */
-    .admin-table img {
-        width: 50px !important; height: 50px !important;
-    }
+    /* Imágenes en tablas */
+    .admin-table img { width: 50px !important; height: 50px !important; }
 
-    /* --- CARRUSEL (SOLUCIÓN FLECHAS) --- */
-    .carousel-wrapper { padding: 0; margin-top: 20px; }
-    .service-slide { flex: 0 0 100%; min-width: 100%; }
+    /* --- FORMULARIOS --- */
+    form div[style*="display: flex"] { 
+        flex-direction: column !important; 
+        gap: 0 !important;
+    }
+    .card form div { margin-bottom: 15px; }
     
-    /* Flechas flotantes más pequeñas y transparentes para no tapar texto */
+    input, select, textarea { font-size: 16px !important; }
+
+    /* --- CARRUSEL --- */
+    .carousel-wrapper { padding: 0; margin-top: 20px; }
+    .service-slide { min-width: 100%; flex: 0 0 100%; border: none; }
+    
+    /* Botones más sutiles y separados */
     .carousel-btn { 
-        width: 40px; height: 40px; 
-        background: rgba(46, 204, 113, 0.2); /* Verde transparente */
-        backdrop-filter: blur(5px);
+        width: 45px; height: 45px; 
+        background: rgba(0,0,0,0.5); 
         border: 1px solid var(--kaitek-green);
-        font-size: 1rem;
+        backdrop-filter: blur(4px);
     }
     .btn-prev { left: 10px; }
     .btn-next { right: 10px; }
-
-    /* Dar espacio al texto para que no choque con las flechas */
-    .service-content { padding: 30px 50px; } 
+    .service-content { padding: 30px 20px; } /* Más espacio interno */
 
     /* --- DETALLE PRODUCTO --- */
     .product-detail-container { 
-        grid-template-columns: 1fr !important; 
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 20px !important; 
         gap: 30px !important;
-        padding: 20px !important;
     }
+    #main-image { height: auto !important; max-height: 300px; background: #000; }
     
-    /* Imagen principal que no sea gigante */
-    #main-image { height: 300px !important; background: #0b1116; }
-    
-    /* Botones de acción grandes */
-    .action-btn { padding: 10px 15px; font-size: 1.1rem; }
+    /* Contacto */
+    .contact-wrapper { margin: 20px 10px; flex-direction: column; }
+    .contact-info-panel, .contact-form-panel { padding: 30px 20px; }
 }
