@@ -2,55 +2,27 @@
 
 {% block content %}
 <style>
+    /* Estilos para las miniaturas */
     .preview-item {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        border: 1px solid #2ecc71;
-        border-radius: 4px;
-        overflow: hidden;
-        transition: transform 0.2s;
-        background-color: #000;
+        position: relative; width: 80px; height: 80px;
+        border: 1px solid #2ecc71; border-radius: 4px;
+        overflow: hidden; background-color: #000;
     }
-    
-    .preview-item:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
-    }
-
-    .preview-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
+    .preview-item img { width: 100%; height: 100%; object-fit: cover; }
     .btn-remove-img {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: rgba(231, 76, 60, 0.9);
-        color: white;
-        border: none;
-        width: 25px;
-        height: 25px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        border-bottom-left-radius: 4px;
-        text-decoration: none;
-        font-size: 1.2rem;
-        line-height: 1;
-        z-index: 10;
+        position: absolute; top: 0; right: 0;
+        background: rgba(231, 76, 60, 0.9); color: white; border: none;
+        width: 20px; height: 20px; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: bold; z-index: 10;
     }
-    .btn-remove-img:hover { background: red; }
 </style>
 
-<div style="max-width: 900px; margin: 30px auto; padding: 30px; background: #162433; color: white; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+<!-- Usamos la clase nueva 'admin-form-card' para mantener la estética -->
+<div class="admin-form-card">
     
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #2ecc71; padding-bottom: 15px; margin-bottom: 25px;">
-        <h2 style="margin: 0;">{{ "Editar" if producto else "Nuevo" }} Producto</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px;">
+        <h2 style="margin: 0; color: white;">{{ "Editar" if producto else "Nuevo" }} Producto</h2>
         <a href="{{ url_for('productos.listar_productos') }}" style="color: #ccc; text-decoration: none;">
             <i class="fas fa-times"></i> Cancelar
         </a>
@@ -58,89 +30,72 @@
     
     <form method="POST" enctype="multipart/form-data" id="productForm">
         
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div style="flex: 2; margin-bottom: 15px;">
-                <label style="display:block; margin-bottom:5px;">Nombre del Producto</label>
-                <input type="text" name="nombre" value="{{ producto.nombre if producto else '' }}" required 
-                       style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px;">
-            </div>
+        <!-- Nombre -->
+        <div style="margin-bottom: 20px;">
+            <label style="display:block; margin-bottom:8px; color: #aaa;">Nombre del Producto</label>
+            <input type="text" name="nombre" value="{{ producto.nombre if producto else '' }}" required 
+                   style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px; box-sizing: border-box;">
+        </div>
 
-            <div style="flex: 1; margin-bottom: 15px;">
-                <label style="display:block; margin-bottom:5px; color: #2ecc71;">Categoría</label>
-                
-                <!-- CAMBIO CLAVE: Select dinámico -->
-                <select name="categoria" required style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px;">
+        <!-- Categoría y Precio -->
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+            <div style="flex: 1;">
+                <label style="display:block; margin-bottom:8px; color: var(--kaitek-green);">Categoría</label>
+                <select name="categoria" required style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px; box-sizing: border-box;">
                     <option value="" disabled selected>Seleccionar...</option>
-                    
                     {% for c in categorias %}
-                        <option value="{{ c.nombre }}" {% if producto and producto.categoria == c.nombre %}selected{% endif %}>
-                            {{ c.nombre }}
-                        </option>
+                        <option value="{{ c.nombre }}" {% if producto and producto.categoria == c.nombre %}selected{% endif %}>{{ c.nombre }}</option>
                     {% else %}
-                        <option value="" disabled>No hay categorías creadas</option>
+                        <option value="" disabled>No hay categorías</option>
                     {% endfor %}
-                    
                 </select>
-                <!-- Mensaje de ayuda -->
-                <small style="color: #666; font-size: 0.8rem; display: block; margin-top: 5px;">
-                    ¿Falta una categoría? Créala desde <a href="{{ url_for('categorias.gestionar_categorias') }}" style="color: #2ecc71;">Categorías</a>
-                </small>
+            </div>
+            
+            <div style="flex: 1;">
+                <label style="display:block; margin-bottom:8px; color: #aaa;">Precio Ref.</label>
+                <input type="text" name="precio" value="{{ producto.precio if producto else '' }}" placeholder="Ej: A cotizar"
+                       style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px; box-sizing: border-box;">
             </div>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display:block; margin-bottom:5px;">Precio / Referencia</label>
-            <input type="text" name="precio" value="{{ producto.precio if producto else '' }}" placeholder="Ej: $12.000 o 'A cotizar'"
-                   style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px;">
+        <!-- Descripción -->
+        <div style="margin-bottom: 20px;">
+            <label style="display:block; margin-bottom:8px; color: #aaa;">Descripción Técnica</label>
+            <textarea name="descripcion" rows="5" required 
+                      style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px; font-family: sans-serif; box-sizing: border-box;">{{ producto.descripcion if producto else '' }}</textarea>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label style="display:block; margin-bottom:5px;">Descripción Técnica</label>
-            <textarea name="descripcion" rows="6" required 
-                      style="width: 100%; padding: 12px; background: #0b1116; border: 1px solid #333; color: white; border-radius: 4px; font-family: sans-serif;">{{ producto.descripcion if producto else '' }}</textarea>
-        </div>
-
-        <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
-            <label style="display:block; margin-bottom:10px; font-size: 1.1rem; color: #2ecc71;">Galería de Imágenes</label>
+        <!-- Imágenes -->
+        <div style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+            <label style="display:block; margin-bottom:15px; color: var(--kaitek-green);">Imágenes</label>
             
+            <!-- Existentes -->
             {% if producto and producto.imagenes %}
-            <div style="margin-bottom: 20px;">
-                <p style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">Imágenes actuales:</p>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    {% for img_url in producto.imagenes %}
-                    <div class="preview-item" style="border-color: #555;">
-                        <img src="{{ img_url }}">
-                        <a href="{{ url_for('productos.eliminar_imagen', id=producto._id, url=img_url) }}" 
-                           class="btn-remove-img"
-                           onclick="return confirm('¿Eliminar esta foto?');"
-                           title="Eliminar imagen">
-                            &times;
-                        </a>
-                    </div>
-                    {% endfor %}
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                {% for img_url in producto.imagenes %}
+                <div class="preview-item">
+                    <img src="{{ img_url }}">
+                    <a href="{{ url_for('productos.eliminar_imagen', id=producto._id, url=img_url) }}" 
+                       class="btn-remove-img" onclick="return confirm('¿Borrar?');">&times;</a>
                 </div>
+                {% endfor %}
             </div>
             {% endif %}
 
-            <div style="border: 2px dashed #444; border-radius: 8px; padding: 30px; text-align: center; background: rgba(0,0,0,0.2);">
-                <i class="fas fa-cloud-upload-alt fa-3x" style="color: #555; margin-bottom: 10px;"></i>
-                <p style="margin: 0; color: #aaa;">Añadir imágenes nuevas</p>
-                <input type="file" name="imagenes" id="file-input" multiple style="display: none;">
-                <button type="button" onclick="document.getElementById('file-input').click()" 
-                        style="margin-top: 15px; background: #2ecc71; color: #0b1116; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; cursor: pointer;">
-                    <i class="fas fa-plus"></i> Seleccionar Fotos
-                </button>
-            </div>
-
-            <div style="margin-top: 20px;">
-                <p id="counter-text" style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">Nuevas imágenes para subir:</p>
-                <div id="preview-container" style="display: flex; gap: 15px; flex-wrap: wrap;"></div>
-            </div>
+            <!-- Nuevas -->
+            <input type="file" name="imagenes" id="file-input" multiple style="display: none;">
+            <button type="button" onclick="document.getElementById('file-input').click()" 
+                    style="background: #333; color: white; border: 1px dashed #666; padding: 10px; width: 100%; cursor: pointer; border-radius: 4px;">
+                <i class="fas fa-camera"></i> Agregar Fotos
+            </button>
+            <p id="counter-text" style="font-size: 0.8rem; color: #888; margin-top: 10px;"></p>
+            <div id="preview-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>
         </div>
 
+        <!-- Botón Guardar -->
         <div style="margin-top: 30px;">
-            <button type="submit" style="background: linear-gradient(45deg, #2ecc71, #27ae60); color: white; padding: 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1rem; width: 100%; font-weight: bold;">
-                <i class="fas fa-save"></i> Guardar Cambios
+            <button type="submit" class="btn-contacto" style="width: 100%; padding: 15px; font-size: 1.1rem; border: none; cursor: pointer;">
+                Guardar Cambios
             </button>
         </div>
     </form>
@@ -154,35 +109,21 @@
 
     input.addEventListener('change', function(e) {
         const files = e.target.files;
-        for (let i = 0; i < files.length; i++) {
-            storedFiles.push(files[i]);
-        }
-        updatePreview();
-        updateInputFiles();
+        for (let i = 0; i < files.length; i++) { storedFiles.push(files[i]); }
+        updatePreview(); updateInputFiles();
     });
 
     function updatePreview() {
         container.innerHTML = "";
-        if (storedFiles.length === 0) {
-            counter.innerText = "No hay imágenes nuevas seleccionadas.";
-            return;
-        }
-        counter.innerText = `Nuevas imágenes listas para subir: ${storedFiles.length}`;
+        if (storedFiles.length > 0) counter.innerText = `${storedFiles.length} fotos seleccionadas`;
+        else counter.innerText = "";
 
         storedFiles.forEach((file, index) => {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const div = document.createElement('div');
                 div.className = 'preview-item';
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                const btn = document.createElement('button');
-                btn.className = 'btn-remove-img';
-                btn.innerHTML = '&times;';
-                btn.type = 'button';
-                btn.onclick = function() { removeFile(index); };
-                div.appendChild(img);
-                div.appendChild(btn);
+                div.innerHTML = `<img src="${e.target.result}"><button type="button" class="btn-remove-img" onclick="removeFile(${index})">&times;</button>`;
                 container.appendChild(div);
             }
             reader.readAsDataURL(file);
@@ -190,9 +131,7 @@
     }
 
     function removeFile(index) {
-        storedFiles.splice(index, 1);
-        updatePreview();
-        updateInputFiles();
+        storedFiles.splice(index, 1); updatePreview(); updateInputFiles();
     }
 
     function updateInputFiles() {
