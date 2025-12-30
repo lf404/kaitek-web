@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto;">
+    
+    <!-- Tarjeta de Edición -->
+    <div style="background: #162433; padding: 40px; border-radius: 8px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        
+        <h2 style="color: white; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--skf-blue); padding-bottom: 10px;">
+            Editar Categoría
+        </h2>
+
+        <form method="POST">
+            <div style="margin-bottom: 25px;">
+                <label style="color: #aaa; display: block; margin-bottom: 10px; font-size: 1rem;">Nombre Actual</label>
+                <!-- Pre-cargamos el valor actual con value="{{ categoria.nombre }}" -->
+                <input type="text" name="nombre" value="{{ categoria.nombre }}" required 
+                       style="width: 100%; padding: 15px; background: #0b1116; border: 1px solid #444; color: white; border-radius: 4px; font-size: 1.1rem; box-sizing: border-box;">
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <!-- Botón Guardar -->
+                <button type="submit" class="btn-contacto" style="flex: 1; border: none; cursor: pointer; font-size: 1rem; padding: 12px;">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+                
+                <!-- Botón Cancelar -->
+                <a href="{{ url_for('categorias.gestionar_categorias') }}" style="flex: 1; text-align: center; padding: 12px; background: #333; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

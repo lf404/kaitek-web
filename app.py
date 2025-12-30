@@ -2,7 +2,8 @@ import os
 from flask import Flask
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from flask_mail import Mail # Importar extensión de correo
+from flask_mail import Mail
+import cloudinary
 
 # Cargar variables de entorno (.env)
 load_dotenv()
@@ -11,6 +12,8 @@ from config import Config
 from routes.admin import admin_bp
 from routes.productos import productos_bp
 from routes.catalogo import catalogo_bp
+# IMPORTANTE: Importamos la nueva ruta de categorías
+from routes.categorias import categorias_bp 
 
 def create_app():
     # Inicializar Flask
@@ -20,6 +23,17 @@ def create_app():
     # --- VERIFICACIÓN DE CONFIGURACIÓN ---
     if not Config.MONGO_URI or not Config.DB_NAME:
         raise ValueError("ERROR: Faltan MONGO_URI o DB_NAME en config.py")
+
+    # --- CONFIGURACIÓN DE CLOUDINARY ---
+    if Config.CLOUDINARY_CLOUD_NAME:
+        cloudinary.config(
+            cloud_name = Config.CLOUDINARY_CLOUD_NAME,
+            api_key = Config.CLOUDINARY_API_KEY,
+            api_secret = Config.CLOUDINARY_API_SECRET
+        )
+        print("Cloudinary configurado correctamente.")
+    else:
+        print("ADVERTENCIA: No se detectaron credenciales de Cloudinary en el .env")
 
     # --- CONEXIÓN A MONGODB ---
     try:
@@ -32,20 +46,16 @@ def create_app():
         return None
    
     # --- INICIALIZAR CORREO ---
-    # Esto permite enviar emails desde cualquier parte de la app
     mail = Mail(app)
     app.mail = mail
-
-    # --- SISTEMA DE ARCHIVOS ---
-    upload_path = os.path.join(Config.UPLOAD_FOLDER, "productos")
-    if not os.path.exists(upload_path):
-        os.makedirs(upload_path, exist_ok=True)
-        print(f"Carpeta de uploads verificada: {upload_path}")
 
     # --- REGISTRO DE RUTAS ---
     app.register_blueprint(catalogo_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(productos_bp)
+    
+    # IMPORTANTE: Registramos el blueprint de categorías
+    app.register_blueprint(categorias_bp)
 
     return app
 

@@ -20,7 +20,12 @@
             </a>
         </div>
 
-        <div class="nav-links">
+        <!-- BOTÓN HAMBURGUESA (Solo visible en Móvil por CSS) -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-links" id="navLinks">
             <a href="{{ url_for('catalogo.home') }}">Inicio</a>
             <a href="{{ url_for('catalogo.catalogo') }}">Catálogo</a>
             <a href="{{ url_for('catalogo.quienes_somos') }}">Nosotros</a> 
@@ -41,6 +46,14 @@
             <p style="color: #888;">Su Partner Estratégico en Minería e Industria</p>
         </div>
     </footer>
+
+    <!-- SCRIPT PARA EL MENÚ MÓVIL -->
+    <script>
+        function toggleMenu() {
+            var nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+    </script>
 
 </body>
 </html>

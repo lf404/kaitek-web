@@ -1,54 +1,81 @@
 {% extends "base_public.html" %}
 
+{% block title %}Inicio | Kaitek Solutions{% endblock %}
+
 {% block content %}
 
-<!-- Sección Hero -->
+<!-- =========================================
+     1. ACTIVADOR DEL FONDO (IMPORTANTE)
+     Esta línea vacía es la que el CSS busca para poner 
+     tu foto 'fondo-kaitek.jpg' y la animación de malla.
+     ========================================= -->
+<div class="home-special-bg"></div>
+
+<!-- =========================================
+     2. HERO SECTION
+     ========================================= -->
 <section class="hero">
     <h1>KAITEK SOLUTIONS SpA</h1>
     <h2>Su Partner Estratégico</h2>
     
     <div style="margin-top: 40px;">
-        <a href="{{ url_for('catalogo.catalogo') }}" class="btn-contacto" style="font-size: 1.2rem; padding: 15px 30px; text-decoration: none;">
-            Ver catálogo
+        <a href="{{ url_for('catalogo.catalogo') }}" class="btn-contacto" style="font-size: 1.2rem; padding: 15px 40px; text-decoration: none;">
+            Ver Catálogo
         </a>
     </div>
 </section>
 
-<!-- Barra de Alianzas -->
+<!-- =========================================
+     3. ALIANZAS (Estilos ajustados para fondo oscuro)
+     ========================================= -->
 <section class="alianzas">
     <h3>Nuestras Alianzas Estratégicas</h3>
     <div class="logos-grid">
-        <div class="partner-box" style="border: 2px solid #000; color: #000;">LESSWEAR SPA</div>
+        <!-- Cambié border: #000 a #fff para que se vea sobre lo oscuro -->
+        <div class="partner-box" style="border: 2px solid #000000; color: #000000;">LESSWEAR SPA</div>
         <div class="partner-box" style="background: #0099da; color: white;">SKF</div>
         <div class="partner-box" style="background: #d63031; color: white;">TAS SCHÄFER</div>
     </div>
 </section>
 
-<!-- Servicios Destacados -->
+<!-- =========================================
+     4. SERVICIOS DESTACADOS
+     ========================================= -->
 <section class="grid">
+    
     <div class="card">
-        <i class="fas fa-layer-group fa-3x" style="color: var(--kaitek-green);"></i>
-        <h3>Placas de Desgaste</h3>
-        <p>Soluciones en Alto Cromo, Tungsteno, Bimetálicas y Chocky Bars para ambientes severos.</p>
+        <!-- Agregué 'card-content' para respetar el padding del diseño nuevo -->
+        <div class="card-content">
+            <i class="fas fa-layer-group fa-3x" style="color: var(--kaitek-green); margin-bottom: 15px;"></i>
+            <h3>Placas de Desgaste</h3>
+            <p>Soluciones en Alto Cromo, Tungsteno, Bimetálicas y Chocky Bars para ambientes severos.</p>
+        </div>
     </div>
 
     <div class="card">
-        <i class="fas fa-cogs fa-3x" style="color: var(--skf-blue);"></i>
-        <h3>Maestranza SKF</h3>
-        <p>Mecanizado de precisión, fabricación de ejes de hasta 6 metros y recuperación de soportes certificados.</p>
+        <div class="card-content">
+            <i class="fas fa-cogs fa-3x" style="color: var(--skf-blue); margin-bottom: 15px;"></i>
+            <h3>Maestranza SKF</h3>
+            <p>Mecanizado de precisión, fabricación de ejes de hasta 6 metros y recuperación de soportes certificados.</p>
+        </div>
     </div>
 
     <div class="card">
-        <i class="fas fa-anchor fa-3x" style="color: var(--kaitek-green);"></i>
-        <h3>Pernos Especiales</h3>
-        <p>Pernos de alta resistencia mecánica, inoxidables y con tecnología de Wolframio.</p>
+        <div class="card-content">
+            <i class="fas fa-anchor fa-3x" style="color: var(--kaitek-green); margin-bottom: 15px;"></i>
+            <h3>Pernos Especiales</h3>
+            <p>Pernos de alta resistencia mecánica, inoxidables y con tecnología de Wolframio.</p>
+        </div>
     </div>
 
     <div class="card">
-        <i class="fas fa-route fa-3x" style="color: #e67e22;"></i>
-        <h3>Ductos y Revestimientos</h3>
-        <p>Fabricación y revestimiento de cañerías (Epoxi, Poliuretano, Cerámico) para fluidos abrasivos.</p>
+        <div class="card-content">
+            <i class="fas fa-route fa-3x" style="color: #e67e22; margin-bottom: 15px;"></i>
+            <h3>Ductos y Revestimientos</h3>
+            <p>Fabricación y revestimiento de cañerías (Epoxi, Poliuretano, Cerámico) para fluidos abrasivos.</p>
+        </div>
     </div>
+
 </section>
 
 {% endblock %}

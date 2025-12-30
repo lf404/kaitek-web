@@ -3,27 +3,25 @@
 {% block content %}
 <div style="max-width: 1200px; margin: 40px auto; padding: 20px;">
     
-    <!-- Botón volver -->
     <a href="{{ url_for('catalogo.catalogo') }}" style="color: var(--kaitek-green); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 20px;">
         <i class="fas fa-arrow-left"></i> Volver al catálogo
     </a>
 
     {% if producto %}
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; background: var(--kaitek-navy); padding: 40px; border-radius: 8px; border: 1px solid #333;">
+    <!-- CAMBIO AQUÍ: Agregamos class="product-detail-container" para que el CSS lo controle en móviles -->
+    <div class="product-detail-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; background: var(--kaitek-navy); padding: 40px; border-radius: 8px; border: 1px solid #333;">
         
         <!-- Galería de Imágenes -->
         <div>
-            <!-- Imagen Principal (Le pusimos ID para identificarla) -->
             {% if producto.imagenes %}
-                <img id="main-image" src="{{ url_for('static', filename='uploads/' + producto.imagenes[0]) }}" 
+                <img id="main-image" src="{{ producto.imagenes[0] }}" 
                      alt="{{ producto.nombre }}" 
                      style="width: 100%; height: 400px; object-fit: contain; background: #000; border-radius: 4px; border: 1px solid #333;">
                 
-                <!-- Miniaturas (Clickeables) -->
                 {% if producto.imagenes|length > 1 %}
                 <div style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto;">
                     {% for img in producto.imagenes %}
-                    <img src="{{ url_for('static', filename='uploads/' + img) }}" 
+                    <img src="{{ img }}" 
                          onclick="changeImage(this)"
                          style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.7; transition: 0.3s;"
                          onmouseover="this.style.opacity=1; this.style.borderColor='#2ecc71';" 
@@ -71,7 +69,6 @@
     {% endif %}
 </div>
 
-<!-- Script para cambiar la imagen -->
 <script>
     function changeImage(thumbnail) {
         var mainImage = document.getElementById('main-image');

@@ -4,14 +4,9 @@
 
 {% block content %}
 
-<!-- =========================================
-     1. FONDO Y ENCABEZADO
-     ========================================= -->
-
-<!-- Fondo de pantalla completa (Definido en style.css como .full-page-bg) -->
+<!-- Fondo y Encabezado -->
 <div class="full-page-bg"></div>
 
-<!-- Título Flotante -->
 <div class="services-header">
     <h1 style="font-size: 3.5rem; text-transform: uppercase; letter-spacing: 3px; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
         Nuestros Servicios
@@ -21,23 +16,16 @@
     </p>
 </div>
 
-<!-- =========================================
-     2. CARRUSEL DE SERVICIOS
-     ========================================= -->
+<!-- CARRUSEL DE SERVICIOS -->
 <section class="carousel-wrapper">
     
-    <!-- Botón Navegación Izquierda (<) -->
     <button class="carousel-btn btn-prev" id="prevBtn">
         <i class="fas fa-chevron-left"></i>
     </button>
 
-    <!-- Contenedor Oculto (La "ventana" que ve el usuario) -->
     <div class="carousel-track-container">
-        
-        <!-- Pista Deslizante (Contiene todas las tarjetas) -->
         <ul class="carousel-track" id="track">
             
-            <!-- TARJETA 1: FUNDICIÓN -->
             <li class="service-slide">
                 <div class="service-img-box">
                     <img src="https://images.unsplash.com/photo-1518709414768-a8c981a45e5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fundición">
@@ -54,7 +42,6 @@
                 </div>
             </li>
 
-            <!-- TARJETA 2: MAESTRANZA SKF -->
             <li class="service-slide">
                 <div class="service-img-box">
                     <img src="https://images.unsplash.com/photo-1565193566173-0929d995b5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Maestranza CNC">
@@ -71,7 +58,6 @@
                 </div>
             </li>
 
-            <!-- TARJETA 3: DUCTOS -->
             <li class="service-slide">
                 <div class="service-img-box">
                     <img src="https://images.unsplash.com/photo-1535579730598-a15d04c40751?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ductos">
@@ -88,7 +74,6 @@
                 </div>
             </li>
 
-            <!-- TARJETA 4: POLEAS -->
             <li class="service-slide">
                 <div class="service-img-box">
                     <img src="https://images.unsplash.com/photo-1616401776146-247b5dad443c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Poleas">
@@ -105,7 +90,6 @@
                 </div>
             </li>
 
-            <!-- TARJETA 5: FIJACIONES -->
             <li class="service-slide">
                 <div class="service-img-box">
                     <img src="https://images.unsplash.com/photo-1533235654924-f7d431057476?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fijaciones">
@@ -125,55 +109,43 @@
         </ul>
     </div>
 
-    <!-- Botón Navegación Derecha (>) -->
     <button class="carousel-btn btn-next" id="nextBtn">
         <i class="fas fa-chevron-right"></i>
     </button>
 </section>
 
-<!-- =========================================
-     3. LÓGICA JAVASCRIPT (CARRUSEL INFINITO)
-     ========================================= -->
+<!-- LÓGICA JAVASCRIPT CORREGIDA PARA MÓVIL -->
 <script>
-    // Referencias a los elementos del DOM
     const track = document.getElementById('track');
     const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
 
-    // ANCHO DE MOVIMIENTO:
-    // Debe coincidir con el CSS: min-width (350px) + gap (30px) = 380px
-    const cardWidth = 380; 
+    // Función para obtener el ancho real de la tarjeta + gap (30px)
+    function getCardWidth() {
+        const slide = document.querySelector('.service-slide');
+        return slide.offsetWidth + 30; // Ancho dinámico + gap CSS
+    }
 
-    // --- FUNCIÓN MOVER A LA DERECHA (NEXT) ---
     nextBtn.addEventListener('click', () => {
-        // 1. Deslizamos el track hacia la izquierda visualmente
+        const moveAmount = getCardWidth();
         track.style.transition = 'transform 0.5s ease-in-out';
-        track.style.transform = `translateX(-${cardWidth}px)`;
+        track.style.transform = `translateX(-${moveAmount}px)`;
         
-        // 2. Cuando termina la animación (500ms)...
         setTimeout(() => {
-            // Quitamos la transición para hacer el cambio invisible
             track.style.transition = 'none';
-            // Tomamos el PRIMER elemento y lo mandamos al FINAL de la lista
             track.appendChild(track.firstElementChild);
-            // Reseteamos la posición a 0 (como movimos el elemento, parece que no pasó nada)
             track.style.transform = 'translateX(0)';
         }, 500);
     });
 
-    // --- FUNCIÓN MOVER A LA IZQUIERDA (PREV) ---
     prevBtn.addEventListener('click', () => {
-        // 1. Preparamos el movimiento instantáneo
+        const moveAmount = getCardWidth();
         track.style.transition = 'none';
-        // Tomamos el ÚLTIMO elemento y lo ponemos al PRINCIPIO
         track.prepend(track.lastElementChild);
-        // Desplazamos el track para que el usuario no note el cambio brusco
-        track.style.transform = `translateX(-${cardWidth}px)`;
+        track.style.transform = `translateX(-${moveAmount}px)`;
         
-        // 2. Una fracción de segundo después, activamos la animación
         setTimeout(() => {
             track.style.transition = 'transform 0.5s ease-in-out';
-            // Deslizamos hacia la posición 0 (el nuevo elemento entra suavemente)
             track.style.transform = 'translateX(0)';
         }, 10);
     });
