@@ -1,90 +1,68 @@
 {% extends "base_public.html" %}
 
+{% block title %}Catálogo | Kaitek Solutions{% endblock %}
+
 {% block content %}
-<div style="max-width: 1200px; margin: 40px auto; padding: 20px;">
-    
-    <a href="{{ url_for('catalogo.catalogo') }}" style="color: var(--kaitek-green); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 20px;">
-        <i class="fas fa-arrow-left"></i> Volver al catálogo
-    </a>
 
-    {% if producto %}
-    <div class="product-detail-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; background: var(--kaitek-navy); padding: 40px; border-radius: 8px; border: 1px solid #333;">
-        
-        <!-- Galería -->
-        <div>
-            {% if producto.imagenes %}
-                <img id="main-image" src="{{ producto.imagenes[0] }}" 
-                     alt="{{ producto.nombre }}" 
-                     style="width: 100%; height: 400px; object-fit: contain; background: #000; border-radius: 4px; border: 1px solid #333;">
-                
-                {% if producto.imagenes|length > 1 %}
-                <div style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto;">
-                    {% for img in producto.imagenes %}
-                    <img src="{{ img }}" onclick="changeImage(this)"
-                         style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.7;">
-                    {% endfor %}
-                </div>
-                {% endif %}
-            {% else %}
-                <div style="width: 100%; height: 300px; background: #222; display: flex; align-items: center; justify-content: center; color: #555;">Sin imagen</div>
-            {% endif %}
-        </div>
+<!-- ENCABEZADO Y FILTROS -->
+<div style="text-align: center; margin-top: 40px; margin-bottom: 40px; padding: 0 20px;">
+    <h1 style="color: white; text-transform: uppercase; letter-spacing: 2px;">Catálogo</h1>
+    <p style="color: var(--kaitek-green);">Soluciones especializadas</p>
 
-        <!-- Info -->
-        <div>
-            <h1 style="color: white; margin-top: 0; font-size: 2.5rem;">{{ producto.nombre }}</h1>
-            <div style="margin-bottom: 20px;">
-                <span class="cat-badge" style="font-size: 1rem; padding: 5px 15px;">{{ producto.categoria }}</span>
-            </div>
-
-            <div style="margin-top: 30px; color: #ccc; line-height: 1.8;">
-                <h3 style="color: var(--skf-blue); border-bottom: 1px solid #333; padding-bottom: 10px;">Descripción Técnica</h3>
-                <p style="white-space: pre-line; font-size: 1.1rem; text-align: justify;">{{ producto.descripcion }}</p>
-            </div>
-
-            {% if producto.precio %}
-            <div style="margin-top: 30px; font-size: 1.8rem; color: var(--kaitek-green); font-weight: bold;">
-                {{ producto.precio }}
-            </div>
-            {% endif %}
-
-            <!-- BOTÓN ESCRITORIO (Visible solo en PC) -->
-            <div class="desktop-only" style="margin-top: 40px;">
-                <a href="https://wa.me/56932579742?text=Hola,%20me%20interesa%20{{ producto.nombre }}" target="_blank" class="btn-contacto" style="display: block; text-align: center; width: 100%; font-size: 1.2rem;">
-                    <i class="fab fa-whatsapp"></i> Cotizar ahora
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- BOTÓN STICKY MÓVIL (Visible solo en celular gracias al CSS) -->
-    <!-- Creamos un espaciador para que el footer no quede tapado -->
-    <div class="product-spacer display-mobile-only"></div>
-    
-    <div class="sticky-cotizar-container display-mobile-only">
-        <a href="https://wa.me/56932579742?text=Hola,%20me%20interesa%20{{ producto.nombre }}" target="_blank" class="btn-contacto">
-            <i class="fab fa-whatsapp"></i> Cotizar ahora
+    <!-- Barra de Filtros -->
+    <div class="filter-bar">
+        <a href="{{ url_for('catalogo.catalogo') }}" class="filter-btn {% if not cat_actual %}active{% endif %}">
+            Todos
         </a>
+        {% for cat in categorias %}
+            <a href="{{ url_for('catalogo.catalogo', categoria=cat) }}" 
+               class="filter-btn {% if cat_actual == cat %}active{% endif %}">
+               {{ cat }}
+            </a>
+        {% endfor %}
     </div>
-
-    {% else %}
-        <h2 style="text-align: center; color: white;">Producto no encontrado</h2>
-    {% endif %}
 </div>
 
-<!-- Lógica para ocultar/mostrar botones según dispositivo -->
-<style>
-    .display-mobile-only { display: none !important; }
-    @media (max-width: 768px) {
-        .desktop-only { display: none !important; }
-        .display-mobile-only { display: flex !important; }
-        .product-spacer { display: block !important; }
-    }
-</style>
+<!-- GRILLA DE PRODUCTOS -->
+<section class="grid">
+    {% for p in productos %}
+    <div class="card">
+        
+        <!-- IMAGEN (Lógica Cloudinary) -->
+        {% if p.imagenes %}
+            <div style="height: 200px; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #333;">
+                <!-- AQUÍ ESTÁ LA CLAVE: src directo, sin url_for static -->
+                <img src="{{ p.imagenes[0] }}" alt="{{ p.nombre }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+        {% else %}
+            <div style="height: 200px; background: #222; display: flex; align-items: center; justify-content: center; color: #555;">
+                <i class="fas fa-camera fa-2x"></i>
+            </div>
+        {% endif %}
+        
+        <div class="card-content" style="padding: 20px;">
+            <span class="cat-badge">{{ p.categoria }}</span>
+            <h3>{{ p.nombre }}</h3>
+            
+            <!-- Descripción cortada para que no descuadre -->
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px; height: 40px; overflow: hidden;">
+                {{ p.descripcion }}
+            </p>
+            
+            <a href="{{ url_for('catalogo.producto', id=p._id) }}" class="btn-detalle">
+                Ver Detalles
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <!-- Mensaje si no hay nada -->
+    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+        <h3 style="color: #666;">No hay productos en esta categoría.</h3>
+        <a href="{{ url_for('catalogo.catalogo') }}" class="btn-contacto" style="margin-top: 20px; display: inline-block;">
+            Ver Todos
+        </a>
+    </div>
+    {% endfor %}
+</section>
 
-<script>
-    function changeImage(thumbnail) {
-        document.getElementById('main-image').src = thumbnail.src;
-    }
-</script>
 {% endblock %}
