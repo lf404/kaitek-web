@@ -93,14 +93,20 @@ body {
 
 .btn-contacto {
     background-color: var(--kaitek-green);
-    color: #0b1116; /* Texto oscuro para contraste */
+    color: #0b1116;
     padding: 8px 16px;
     border-radius: 4px;
     font-weight: bold;
     text-decoration: none;
 }
 
-.menu-toggle { display: none; color: white; font-size: 1.8rem; cursor: pointer; }
+/* ICONO HAMBURGUESA */
+.menu-toggle {
+    display: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
 
 /* ==========================================================================
    3. ESTILOS GENERALES
@@ -147,7 +153,6 @@ body {
 .card h3 { color: var(--text-white); margin-top: 15px; font-size: 1.4rem; }
 .card p { color: var(--text-gray); line-height: 1.6; }
 
-/* Filtros */
 .filter-bar { padding: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
 .filter-btn {
     color: var(--text-gray); text-decoration: none; padding: 8px 15px;
@@ -239,7 +244,7 @@ body {
 
 footer { background-color: black; padding: 50px 20px; text-align: center; margin-top: auto; border-top: 1px solid #333; position: relative; z-index: 10; }
 
-/* ESTILOS PARA FORMULARIO LIMPIO ADMIN */
+/* Estilos formulario admin */
 .admin-form-card {
     max-width: 800px; 
     margin: 30px auto; 
@@ -248,11 +253,11 @@ footer { background-color: black; padding: 50px 20px; text-align: center; margin
     color: white; 
     border-radius: 8px; 
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    border-top: 4px solid var(--kaitek-green); /* El toque estético */
+    border-top: 4px solid var(--kaitek-green);
 }
 
 /* ==========================================================================
-   6. RESPONSIVE MOBILE (PROFESIONAL & APP-LIKE)
+   6. RESPONSIVE MOBILE (CORREGIDO PARA IMAGEN LIMPIA)
    ========================================================================== */
 @media (max-width: 768px) {
     
@@ -273,17 +278,15 @@ footer { background-color: black; padding: 50px 20px; text-align: center; margin
     .hero h1 { font-size: 2.2rem; }
     .grid { padding: 30px 15px; grid-template-columns: 1fr; gap: 20px; }
 
-    /* --- QUIÉNES SOMOS (IMAGEN PRIMERO) --- */
+    /* --- QUIÉNES SOMOS --- */
     .about-section { flex-direction: column; padding: 0 15px; gap: 20px; text-align: center; }
     .about-section.reverse { flex-direction: column; }
-    
-    /* TRUCO: Order -1 sube la imagen al principio en flexbox */
     .about-img { order: -1; width: 100%; margin-bottom: 10px; }
     .about-text { width: 100%; text-align: justify; }
     .about-text h2 { text-align: center; margin-top: 0; }
     .about-text h3 { text-align: center; }
 
-    /* --- CARRUSEL CENTRALIZADO --- */
+    /* --- CARRUSEL --- */
     .carousel-wrapper { padding: 0; margin-top: 20px; }
     .service-slide { min-width: 100%; flex: 0 0 100%; border: none; }
     .carousel-btn { 
@@ -294,49 +297,28 @@ footer { background-color: black; padding: 50px 20px; text-align: center; margin
     .btn-next { right: 10px; }
     .service-content { padding: 30px 25px; text-align: center; }
 
-    /* --- BOTÓN COTIZAR STICKY (APP DELIVERY STYLE) --- */
+    /* --- STICKY COTIZAR --- */
     .sticky-cotizar-container {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: #0b1116;
-        padding: 15px;
-        box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-        z-index: 9999;
-        border-top: 1px solid #333;
-        display: flex;
-        justify-content: center;
+        position: fixed; bottom: 0; left: 0; width: 100%; background: #0b1116;
+        padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); z-index: 9999;
+        border-top: 1px solid #333; display: flex; justify-content: center;
     }
-    .sticky-cotizar-container .btn-contacto {
-        width: 100%;
-        text-align: center;
-        padding: 12px;
-        font-size: 1.1rem;
-        border-radius: 8px;
-    }
-    /* Espacio para que el contenido no quede tapado por el botón */
+    .sticky-cotizar-container .btn-contacto { width: 100%; text-align: center; padding: 12px; font-size: 1.1rem; border-radius: 8px; }
     .product-spacer { height: 80px; }
 
-    /* --- FORMULARIOS ADMIN LIMPIOS --- */
+    /* --- ADMIN: CARD VIEW --- */
     .admin-form-card { padding: 20px; margin: 15px; border-top: 4px solid var(--kaitek-green); }
     form div[style*="display: flex"] { flex-direction: column !important; gap: 15px !important; }
     input, select, textarea { font-size: 16px !important; padding: 12px !important; }
-
-    /* --- TABLAS ADMIN A TARJETAS (CARD VIEW) --- */
+    
     .table-container { padding: 0; background: transparent; }
     .admin-table thead { display: none !important; }
     .admin-table, .admin-table tbody, .admin-table tr, .admin-table td {
         display: block; width: 100%; box-sizing: border-box;
     }
     .admin-table tr {
-        background: var(--kaitek-navy);
-        border: 1px solid #444; /* Borde sutil */
-        border-left: 4px solid var(--kaitek-green); /* Borde verde lateral */
-        margin-bottom: 20px;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        background: var(--kaitek-navy); border: 1px solid #444; border-left: 4px solid var(--kaitek-green);
+        margin-bottom: 20px; border-radius: 8px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     .admin-table td {
         display: flex; justify-content: space-between; align-items: center;
@@ -344,9 +326,35 @@ footer { background-color: black; padding: 50px 20px; text-align: center; margin
     }
     .admin-table td:last-child { border-bottom: none; }
     .admin-table td::before {
-        content: attr(data-label);
-        font-weight: bold; color: var(--kaitek-green);
+        content: attr(data-label); font-weight: bold; color: var(--kaitek-green);
         text-transform: uppercase; font-size: 0.8rem; text-align: left;
     }
     .admin-table img { width: 60px !important; height: 60px !important; border-radius: 4px; }
+
+    /* --- DETALLE PRODUCTO (LA CORRECCIÓN DE LA IMAGEN) --- */
+    .product-detail-container { 
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 20px !important; 
+        gap: 20px !important;
+    }
+    
+    /* Aseguramos que el contenedor de la imagen ocupe todo el ancho */
+    .product-detail-container > div:first-child {
+        width: 100%;
+    }
+
+    /* Estilos corregidos para la imagen móvil */
+    #main-image { 
+        width: 100% !important;
+        height: 300px !important; /* Altura fija cómoda */
+        object-fit: contain !important; /* Foto entera, sin recorte */
+        background: transparent !important; /* SIN FONDO NEGRO */
+        border: 1px solid #333 !important;
+        border-radius: 8px;
+    }
+    
+    /* Contacto */
+    .contact-wrapper { margin: 20px 10px; flex-direction: column; }
+    .contact-info-panel, .contact-form-panel { padding: 30px 20px; }
 }
